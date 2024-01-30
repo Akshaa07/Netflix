@@ -7,14 +7,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../Utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Utils/userSlice";
+import Footer from "./Footer";
 
 const Login = () => {
   const [issignin, setsignin] = useState(true);
   const [errormessage, setErrormessage] = useState(null);
-  const navigate = useNavigate();
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
@@ -49,7 +48,6 @@ const Login = () => {
             .catch((error) => {
               setErrormessage(error.message);
             });
-          navigate("/Browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -64,7 +62,6 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          navigate("/Browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -77,16 +74,16 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className="absolute brightness-50 ">
+      <div className="absolute">
         <img
-          className="h-screen object-cover md:h-auto md:object-none"
+          className="h-screen w-screen brightness-75"
           alt="img"
           src="https://assets.nflxext.com/ffe/siteui/vlv3/c38a2d52-138e-48a3-ab68-36787ece46b3/eeb03fc9-99c6-438e-824d-32917ce55783/IN-en-20240101-popsignuptwoweeks-perspective_alpha_website_medium.jpg"
         ></img>
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-full md:w-4/12 absolute h-5/6 bg-black my-36 mx-auto right-0 left-0 bg-opacity-75 px-16"
+        className="w-full md:w-4/12 absolute bg-black my-28 mx-auto right-0 left-0 bg-opacity-75 px-16"
       >
         <h1 className="text-3xl font-semibold text-white py-9 ">
           {issignin ? "Sign In" : "Sign Up"}
@@ -119,7 +116,7 @@ const Login = () => {
         >
           {issignin ? "Sign In" : "Sign Up"}
         </button>
-        <p className="text-white" onClick={togglesignin}>
+        <p className="text-white mb-5" onClick={togglesignin}>
           {issignin
             ? "New to Netflix? Sign Up now"
             : "Are you already regestired? Sign In now"}
@@ -131,6 +128,7 @@ const Login = () => {
           </p>
         )}
       </form>
+      
     </div>
   );
 };
